@@ -1,0 +1,383 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1000001 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000001; };
+		A1000002 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000002; };
+		A1000003 /* YTVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000003; };
+		A1000004 /* YouTubeAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000004; };
+		A1000005 /* ImageCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000005; };
+		A1000006 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000006; };
+		A1000007 /* TrendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000007; };
+		A1000008 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000008; };
+		A1000009 /* CategoryVideosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000009; };
+		A1000010 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000010; };
+		A1000011 /* VideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000011; };
+		A1000012 /* SubscriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000012; };
+		A1000013 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000013; };
+		A1000014 /* VideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000014; };
+		A1000020 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A3000001; };
+		A1000021 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A3000002; };
+		A1000022 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3000003; };
+		A1000023 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3000004; };
+		A1000024 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3000005; };
+		A1000025 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3000006; };
+		A1000026 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3000007; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A2000001 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = YouTube/main.m; sourceTree = "<group>"; };
+		A2000002 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = YouTube/AppDelegate.m; sourceTree = "<group>"; };
+		A2000003 /* YTVideo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = YTVideo.m; path = YouTube/Model/YTVideo.m; sourceTree = "<group>"; };
+		A2000004 /* YouTubeAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = YouTubeAPIManager.m; path = YouTube/Networking/YouTubeAPIManager.m; sourceTree = "<group>"; };
+		A2000005 /* ImageCacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ImageCacheManager.m; path = YouTube/Networking/ImageCacheManager.m; sourceTree = "<group>"; };
+		A2000006 /* MainTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MainTabBarController.m; path = YouTube/Controllers/MainTabBarController.m; sourceTree = "<group>"; };
+		A2000007 /* TrendingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TrendingViewController.m; path = YouTube/Controllers/TrendingViewController.m; sourceTree = "<group>"; };
+		A2000008 /* CategoriesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CategoriesViewController.m; path = YouTube/Controllers/CategoriesViewController.m; sourceTree = "<group>"; };
+		A2000009 /* CategoryVideosViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CategoryVideosViewController.m; path = YouTube/Controllers/CategoryVideosViewController.m; sourceTree = "<group>"; };
+		A2000010 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = YouTube/Controllers/SearchViewController.m; sourceTree = "<group>"; };
+		A2000011 /* VideoPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VideoPlayerViewController.m; path = YouTube/Controllers/VideoPlayerViewController.m; sourceTree = "<group>"; };
+		A2000012 /* SubscriptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SubscriptionsViewController.m; path = YouTube/Controllers/SubscriptionsViewController.m; sourceTree = "<group>"; };
+		A2000013 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = YouTube/Controllers/SettingsViewController.m; sourceTree = "<group>"; };
+		A2000014 /* VideoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VideoCell.m; path = YouTube/Views/VideoCell.m; sourceTree = "<group>"; };
+		A2000015 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = YouTube/AppDelegate.h; sourceTree = "<group>"; };
+		A2000016 /* YTVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = YTVideo.h; path = YouTube/Model/YTVideo.h; sourceTree = "<group>"; };
+		A2000017 /* YouTubeAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = YouTubeAPIManager.h; path = YouTube/Networking/YouTubeAPIManager.h; sourceTree = "<group>"; };
+		A2000018 /* ImageCacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImageCacheManager.h; path = YouTube/Networking/ImageCacheManager.h; sourceTree = "<group>"; };
+		A2000019 /* MainTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainTabBarController.h; path = YouTube/Controllers/MainTabBarController.h; sourceTree = "<group>"; };
+		A2000030 /* TrendingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TrendingViewController.h; path = YouTube/Controllers/TrendingViewController.h; sourceTree = "<group>"; };
+		A2000031 /* CategoriesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CategoriesViewController.h; path = YouTube/Controllers/CategoriesViewController.h; sourceTree = "<group>"; };
+		A2000032 /* CategoryVideosViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CategoryVideosViewController.h; path = YouTube/Controllers/CategoryVideosViewController.h; sourceTree = "<group>"; };
+		A2000033 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = YouTube/Controllers/SearchViewController.h; sourceTree = "<group>"; };
+		A2000034 /* VideoPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoPlayerViewController.h; path = YouTube/Controllers/VideoPlayerViewController.h; sourceTree = "<group>"; };
+		A2000035 /* SubscriptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SubscriptionsViewController.h; path = YouTube/Controllers/SubscriptionsViewController.h; sourceTree = "<group>"; };
+		A2000036 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = YouTube/Controllers/SettingsViewController.h; sourceTree = "<group>"; };
+		A2000037 /* VideoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoCell.h; path = YouTube/Views/VideoCell.h; sourceTree = "<group>"; };
+		A2000038 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = YouTube/Constants.h; sourceTree = "<group>"; };
+		A2000039 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = YouTube/Info.plist; sourceTree = "<group>"; };
+		A2000040 /* YouTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000041 /* YouTube-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "YouTube-Prefix.pch"; path = YouTube/YouTube-Prefix.pch; sourceTree = "<group>"; };
+		A3000001 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A3000002 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		A3000003 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A3000004 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		A3000005 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A3000006 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		A3000007 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A4000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000020 /* libsqlite3.dylib in Frameworks */,
+				A1000021 /* libz.dylib in Frameworks */,
+				A1000022 /* Security.framework in Frameworks */,
+				A1000023 /* CFNetwork.framework in Frameworks */,
+				A1000024 /* SystemConfiguration.framework in Frameworks */,
+				A1000025 /* MediaPlayer.framework in Frameworks */,
+				A1000026 /* MessageUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A5000001 = {
+			isa = PBXGroup;
+			children = (
+				A5000010 /* YouTube */,
+				A5000020 /* Frameworks */,
+				A5000030 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A5000010 /* YouTube */ = {
+			isa = PBXGroup;
+			children = (
+				A2000015 /* AppDelegate.h */,
+				A2000002 /* AppDelegate.m */,
+				A2000001 /* main.m */,
+				A2000038 /* Constants.h */,
+				A2000041 /* YouTube-Prefix.pch */,
+				A5000011 /* Model */,
+				A5000012 /* Controllers */,
+				A5000013 /* Views */,
+				A5000014 /* Networking */,
+				A2000039 /* Info.plist */,
+			);
+			path = YouTube;
+			sourceTree = "<group>";
+		};
+		A5000011 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A2000016 /* YTVideo.h */,
+				A2000003 /* YTVideo.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5000012 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A2000019 /* MainTabBarController.h */,
+				A2000006 /* MainTabBarController.m */,
+				A2000030 /* TrendingViewController.h */,
+				A2000007 /* TrendingViewController.m */,
+				A2000031 /* CategoriesViewController.h */,
+				A2000008 /* CategoriesViewController.m */,
+				A2000032 /* CategoryVideosViewController.h */,
+				A2000009 /* CategoryVideosViewController.m */,
+				A2000033 /* SearchViewController.h */,
+				A2000010 /* SearchViewController.m */,
+				A2000034 /* VideoPlayerViewController.h */,
+				A2000011 /* VideoPlayerViewController.m */,
+				A2000035 /* SubscriptionsViewController.h */,
+				A2000012 /* SubscriptionsViewController.m */,
+				A2000036 /* SettingsViewController.h */,
+				A2000013 /* SettingsViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A5000013 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A2000037 /* VideoCell.h */,
+				A2000014 /* VideoCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A5000014 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				A2000017 /* YouTubeAPIManager.h */,
+				A2000004 /* YouTubeAPIManager.m */,
+				A2000018 /* ImageCacheManager.h */,
+				A2000005 /* ImageCacheManager.m */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		A5000020 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A3000001 /* libsqlite3.dylib */,
+				A3000002 /* libz.dylib */,
+				A3000003 /* Security.framework */,
+				A3000004 /* CFNetwork.framework */,
+				A3000005 /* SystemConfiguration.framework */,
+				A3000006 /* MediaPlayer.framework */,
+				A3000007 /* MessageUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A5000030 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2000040 /* YouTube.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A6000001 /* YouTube */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8000003 /* Build configuration list for PBXNativeTarget "YouTube" */;
+			buildPhases = (
+				A7000001 /* Sources */,
+				A4000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YouTube;
+			productName = YouTube;
+			productReference = A2000040 /* YouTube.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A9000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = YouTube;
+				TargetAttributes = {
+					A6000001 = {
+						CreatedOnToolsVersion = 4.6;
+					};
+				};
+			};
+			buildConfigurationList = A8000001 /* Build configuration list for PBXProject "YouTube" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A5000001;
+			productRefGroup = A5000030 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A6000001 /* YouTube */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A7000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001 /* main.m in Sources */,
+				A1000002 /* AppDelegate.m in Sources */,
+				A1000003 /* YTVideo.m in Sources */,
+				A1000004 /* YouTubeAPIManager.m in Sources */,
+				A1000005 /* ImageCacheManager.m in Sources */,
+				A1000006 /* MainTabBarController.m in Sources */,
+				A1000007 /* TrendingViewController.m in Sources */,
+				A1000008 /* CategoriesViewController.m in Sources */,
+				A1000009 /* CategoryVideosViewController.m in Sources */,
+				A1000010 /* SearchViewController.m in Sources */,
+				A1000011 /* VideoPlayerViewController.m in Sources */,
+				A1000012 /* SubscriptionsViewController.m in Sources */,
+				A1000013 /* SettingsViewController.m in Sources */,
+				A1000014 /* VideoCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A8000004 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A8000005 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A8000006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "YouTube/YouTube-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = YouTube/Info.plist;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A8000007 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "YouTube/YouTube-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = YouTube/Info.plist;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A8000001 /* Build configuration list for PBXProject "YouTube" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8000004 /* Debug */,
+				A8000005 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A8000003 /* Build configuration list for PBXNativeTarget "YouTube" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8000006 /* Debug */,
+				A8000007 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = A9000001 /* Project object */;
+}
