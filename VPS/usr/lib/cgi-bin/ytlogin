@@ -1,0 +1,246 @@
+#!/usr/bin/env python3
+import sys
+import os
+import cgi
+import json
+import http.cookies
+from urllib.parse import quote, quote_plus
+
+def detect_vps_base():
+    """Detect VPS base URL from request headers"""
+    scheme = os.environ.get("HTTPS", "") == "on" and "https" or "http"
+    host = os.environ.get("HTTP_HOST", "") or os.environ.get("SERVER_NAME", "localhost")
+    port = os.environ.get("SERVER_PORT", "80")
+    vps_base = os.environ.get("VPS_BASE", "").rstrip("/")
+    if not vps_base:
+        if port and port not in ("80", "443"):
+            if ":" in host:
+                vps_base = f"{scheme}://{host}"
+            else:
+                vps_base = f"{scheme}://{host}:{port}"
+        else:
+            vps_base = f"{scheme}://{host}"
+    return vps_base
+
+VPS_BASE = detect_vps_base()
+
+def send_html(body):
+    print("Content-Type: text/html; charset=utf-8")
+    print("Cache-Control: no-cache, no-store")
+    print()
+    print(body)
+
+def send_json(data):
+    print("Content-Type: application/json; charset=utf-8")
+    print("Cache-Control: no-cache, no-store")
+    print()
+    print(json.dumps(data))
+
+def parse_request_cookies():
+    cookie_str = os.environ.get("HTTP_COOKIE", "")
+    result = {"sapisid": None, "hsid": None, "ssid": None, "apisid": None}
+    if not cookie_str:
+        return result
+    try:
+        cookie = http.cookies.SimpleCookie()
+        cookie.load(cookie_str)
+        
+        # Check standard and secure variations of Google/YouTube login cookies
+        for name in ["SAPISID", "HSID", "SSID", "APISID"]:
+            if name in cookie:
+                result[name.lower()] = cookie[name].value
+            elif f"__Secure-3P{name}" in cookie:
+                result[name.lower()] = cookie[f"__Secure-3P{name}"].value
+    except Exception as e:
+        pass
+    return result
+
+def save_device_cookies(device_id, cookies):
+    path = f"/tmp/yt_cookies_{device_id}.json"
+    try:
+        with open(path, "w") as f:
+            json.dump(cookies, f)
+    except:
+        pass
+
+def get_device_cookies(device_id):
+    path = f"/tmp/yt_cookies_{device_id}.json"
+    if os.path.exists(path):
+        try:
+            with open(path) as f:
+                return json.load(f)
+        except:
+            pass
+    return None
+
+def render_ios_pairing_page(device_id, remote_url):
+    qr_url = f"https://api.qrserver.com/v1/create-qr-code/?size=220x220&data={quote_plus(remote_url)}"
+    html = f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Google Sign In</title>
+<style>
+* {{ margin:0; padding:0; box-sizing:border-box; }}
+body {{ font: 16px -apple-system, 'Helvetica Neue', sans-serif; background: #222; color: #fff; display:flex; justify-content:center; align-items:center; min-height:100vh; padding: 20px; }}
+.card {{ background:#2b2b2b; width:100%; max-width:440px; padding:30px 24px; border-radius:12px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }}
+h1 {{ font-size:22px; font-weight:600; margin-bottom:12px; color: #ff3333; }}
+.sub {{ color:#aaa; font-size:14px; margin-bottom:24px; line-height: 1.4; }}
+.url-box {{ background:#1e1e1e; padding:12px; border-radius:6px; font-family:monospace; font-size:13px; word-break:break-all; border:1px solid #444; margin-bottom:24px; color: #4da6ff; }}
+.qr-container {{ background: #fff; display: inline-block; padding: 12px; border-radius: 8px; margin-bottom:24px; }}
+.spinner {{ display: inline-block; width: 24px; height: 24px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #ff3333; animation: spin 1s ease-in-out infinite; margin-top: 8px; }}
+@keyframes spin {{ to {{ transform: rotate(360deg); }} }}
+</style>
+<script>
+function checkStatus() {{
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "?device={device_id}&action=check", true);
+    xhr.onreadystatechange = function() {{
+        if (xhr.readyState == 4 && xhr.status == 200) {{
+            var res = JSON.parse(xhr.responseText);
+            if (res.status === "success") {{
+                window.location.href = "ytlogin://success?token=" + res.token;
+            }} else {{
+                setTimeout(checkStatus, 2000);
+            }}
+        }}
+    }};
+    xhr.send();
+}}
+window.onload = function() {{
+    setTimeout(checkStatus, 2000);
+}};
+</script>
+</head><body>
+<div class="card">
+<h1>Вход в Google</h1>
+<p class="sub">Пожалуйста, войдите в аккаунт со своего телефона или ПК, перейдя по ссылке ниже или отсканировав QR-код:</p>
+<div class="url-box">{remote_url}</div>
+<div class="qr-container">
+    <img src="{qr_url}" width="220" height="220" alt="QR Link">
+</div>
+<div>
+    <div class="spinner"></div>
+    <p style="color:#aaa; font-size:12px; margin-top:10px;">Ожидание авторизации...</p>
+</div>
+</div></body></html>"""
+    send_html(html)
+
+def render_remote_login_page(device_id, cookies_detected):
+    vps_yt_url = f"{VPS_BASE}/youtube/"
+    
+    if cookies_detected:
+        status_html = """
+        <div class="status success">✓ Сессия авторизации найдена!</div>
+        <p class="sub">Мы извлекли необходимые ключи для доступа к вашему аккаунту YouTube.</p>
+        <form method="post">
+            <input type="hidden" name="confirm" value="1">
+            <button class="btn success-btn" type="submit">Синхронизировать с iOS 6</button>
+        </form>
+        """
+    else:
+        status_html = f"""
+        <div class="status warning">⚠ Вы не авторизованы в прокси-версии YouTube</div>
+        <p class="sub">Чтобы войти в свой аккаунт на iOS 6, сначала войдите в него на этой вкладке через наш прокси.</p>
+        <a class="btn login-btn" href="{vps_yt_url}" target="_blank">Войти в YouTube</a>
+        <p class="sub" style="margin-top:20px;">После успешного входа обновите эту страницу:</p>
+        <button class="btn refresh-btn" onclick="window.location.reload();">Проверить авторизацию</button>
+        """
+
+    html = f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Активация YouTube iOS 6</title>
+<style>
+* {{ margin:0; padding:0; box-sizing:border-box; }}
+body {{ font: 16px -apple-system, 'Helvetica Neue', sans-serif; background: #f8f9fa; color: #202124; display:flex; justify-content:center; align-items:center; min-height:100vh; padding: 20px; }}
+.card {{ background:#fff; width:100%; max-width:440px; padding:40px 24px; border-radius:12px; text-align:center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; }}
+h1 {{ font-size:24px; font-weight:600; margin-bottom:12px; color: #ff3333; }}
+.sub {{ color:#5f6368; font-size:14px; margin-bottom:24px; line-height: 1.4; }}
+.status {{ padding: 12px; border-radius: 6px; font-weight: 500; font-size: 14px; margin-bottom: 24px; }}
+.status.success {{ background: #e6f4ea; color: #137333; }}
+.status.warning {{ background: #fef7e0; color: #b06000; }}
+.btn {{ display: block; width:100%; padding:12px; border:none; border-radius:6px; font-size:15px; font-weight:500; text-decoration:none; cursor:pointer; margin-bottom: 12px; transition: background 0.2s; }}
+.login-btn {{ background:#1a73e8; color:#fff; }}
+.login-btn:hover {{ background:#1557b0; }}
+.refresh-btn {{ background:#f1f3f4; color:#3c4043; border: 1px solid #dadce0; }}
+.refresh-btn:hover {{ background:#e8eaed; }}
+.success-btn {{ background:#137333; color:#fff; }}
+.success-btn:hover {{ background:#0f5b28; }}
+</style></head><body>
+<div class="card">
+<h1>Активация YouTube</h1>
+<p class="sub">Связывание устройства с кодом {device_id[:8]}...</p>
+{status_html}
+</div></body></html>"""
+    send_html(html)
+
+def render_success_page():
+    html = """<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Активация успешна</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font: 16px -apple-system, 'Helvetica Neue', sans-serif; background: #e6f4ea; color: #137333; display:flex; justify-content:center; align-items:center; min-height:100vh; padding: 20px; }
+.card { background:#fff; width:100%; max-width:440px; padding:40px 24px; border-radius:12px; text-align:center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; }
+h1 { font-size:24px; font-weight:600; margin-bottom:12px; color: #137333; }
+.sub { color:#5f6368; font-size:14px; margin-bottom:24px; line-height: 1.4; }
+.icon { font-size: 48px; margin-bottom: 16px; }
+</style></head><body>
+<div class="card">
+<div class="icon">✓</div>
+<h1>Активация успешна!</h1>
+<p class="sub">Ваше устройство iOS 6 теперь автоматически авторизуется в системе. Вы можете закрыть эту страницу.</p>
+</div></body></html>"""
+    send_html(html)
+
+def main():
+    form = cgi.FieldStorage()
+    device_id = form.getvalue("device")
+    action = form.getvalue("action")
+    method = os.environ.get("REQUEST_METHOD", "GET")
+
+    if not device_id:
+        send_json({"error": "Missing device parameter"})
+        return
+
+    # 1. Action: Check status (AJAX polling from iOS 6)
+    if action == "check":
+        cookies = get_device_cookies(device_id)
+        if cookies and cookies.get("sapisid"):
+            token = f"{cookies['sapisid']}:{cookies.get('hsid') or ''}:{cookies.get('ssid') or ''}:{cookies.get('apisid') or ''}"
+            send_json({"status": "success", "token": token})
+        else:
+            send_json({"status": "waiting"})
+        return
+
+    # 2. Action: Remote browser activation
+    if action == "remote":
+        # Check if browser already has Google cookies
+        browser_cookies = parse_request_cookies()
+        has_sapisid = browser_cookies.get("sapisid") is not None
+        
+        if method == "POST" and has_sapisid:
+            # Save cookies to device file
+            save_device_cookies(device_id, browser_cookies)
+            render_success_page()
+        else:
+            render_remote_login_page(device_id, has_sapisid)
+        return
+
+    # 3. Default iOS 6 app request
+    # If already logged in, redirect directly to success scheme
+    cookies = get_device_cookies(device_id)
+    if cookies and cookies.get("sapisid"):
+        token = f"{cookies['sapisid']}:{cookies.get('hsid') or ''}:{cookies.get('ssid') or ''}:{cookies.get('apisid') or ''}"
+        print(f"Status: 302 Found")
+        print(f"Location: ytlogin://success?token={token}")
+        print()
+        return
+
+    # Otherwise render pairing page
+    remote_url = f"{VPS_BASE}/cgi-bin/ytlogin?device={device_id}&action=remote"
+    render_ios_pairing_page(device_id, remote_url)
+
+if __name__ == "__main__":
+    main()
