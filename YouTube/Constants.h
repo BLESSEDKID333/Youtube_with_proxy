@@ -11,7 +11,7 @@
 // ==================== VPS BYPASS TOGGLE ====================
 #define VPS_BYPASS_KEY          @"vps_bypass_enabled"
 #define VPS_PROXY_KEY           @"vps_proxy_base"
-#define VPS_PROXY_DEFAULT       @"http://192.144.13.102"
+#define VPS_PROXY_DEFAULT       @"http://YOUR_VPS_IP"
 
 static inline BOOL VPSBypassEnabled(void) {
     return [[NSUserDefaults standardUserDefaults] boolForKey:VPS_BYPASS_KEY];
