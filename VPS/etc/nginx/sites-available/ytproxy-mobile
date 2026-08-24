@@ -1,0 +1,78 @@
+# YouTube iOS6 Mobile Proxy — nginx config (port 9090)
+# Lightweight proxy for iOS 6 webview (InnerTube, thumbnails, embed)
+server {
+    listen 9090;
+    server_name _;
+
+    add_header Access-Control-Allow-Origin * always;
+    add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+    add_header Access-Control-Allow-Headers "Content-Type, Authorization, X-YouTube-Client-Name, X-YouTube-Client-Version, User-Agent, Origin, Referer" always;
+    if ($request_method = OPTIONS) { return 204; }
+
+    location /youtubei/ {
+        proxy_pass https://www.youtube.com/youtubei/;
+        proxy_set_header Host www.youtube.com;
+        proxy_set_header Accept "";
+        proxy_set_header Accept-Encoding "";
+        proxy_set_header Connection "";
+        proxy_http_version 1.1;
+        proxy_buffering off;
+        proxy_read_timeout 30s;
+        proxy_connect_timeout 10s;
+        proxy_ssl_server_name on;
+        proxy_ssl_name www.youtube.com;
+    }
+
+    location /vi/ {
+        proxy_pass https://i.ytimg.com/vi/;
+        proxy_set_header Host i.ytimg.com;
+        proxy_ssl_server_name on;
+        proxy_ssl_name i.ytimg.com;
+        proxy_http_version 1.1;
+    }
+
+    location /img/ {
+        proxy_pass https://img.youtube.com/img/;
+        proxy_set_header Host img.youtube.com;
+        proxy_ssl_server_name on;
+        proxy_ssl_name img.youtube.com;
+        proxy_http_version 1.1;
+    }
+
+    location /embed/ {
+        proxy_pass https://www.youtube.com/embed/;
+        proxy_set_header Host www.youtube.com;
+        proxy_set_header Accept "";
+        proxy_set_header Accept-Encoding "";
+        proxy_set_header Connection "";
+        proxy_http_version 1.1;
+        proxy_buffering off;
+        proxy_ssl_server_name on;
+        proxy_ssl_name www.youtube.com;
+    }
+
+    location /m.youtube.com/ {
+        proxy_pass https://m.youtube.com/;
+        proxy_set_header Host m.youtube.com;
+        proxy_set_header Accept "";
+        proxy_set_header Accept-Encoding "";
+        proxy_set_header Connection "";
+        proxy_http_version 1.1;
+        proxy_buffering off;
+        proxy_ssl_server_name on;
+        proxy_ssl_name m.youtube.com;
+    }
+
+    location /s/ {
+        proxy_pass https://www.youtube.com/s/;
+        proxy_set_header Host www.youtube.com;
+        proxy_ssl_server_name on;
+        proxy_ssl_name www.youtube.com;
+        proxy_http_version 1.1;
+    }
+
+    location / {
+        return 404 '{"error":"not found"}';
+        add_header Content-Type application/json always;
+    }
+}
