@@ -270,33 +270,31 @@
 }
 
 - (void)showQualityPicker {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Quality / Разрешение"
-                                                        delegate:self
-                                               cancelButtonTitle:@"Cancel"
-                                          destructiveButtonTitle:nil
-                                               otherButtonTitles:@"720p HD", @"360p SD", @"240p Low", nil];
-    sheet.tag = 999;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [sheet showFromRect:self.qualityButton.bounds inView:self.qualityButton animated:YES];
-    } else {
-        [sheet showInView:self.view];
-    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Quality / Разрешение"
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"720p HD", @"360p SD", @"240p Low", nil];
+    alert.tag = 999;
+    [alert show];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (actionSheet.tag == 999) {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 999) {
+        if (buttonIndex == alertView.cancelButtonIndex) return;
+
         NSInteger itag = 18;
         NSString *qText = @"360p";
-        if (buttonIndex == 0) { itag = 22; qText = @"720p"; }
-        else if (buttonIndex == 1) { itag = 18; qText = @"360p"; }
-        else if (buttonIndex == 2) { itag = 36; qText = @"240p"; }
+        if (buttonIndex == 1) { itag = 22; qText = @"720p"; }
+        else if (buttonIndex == 2) { itag = 18; qText = @"360p"; }
+        else if (buttonIndex == 3) { itag = 36; qText = @"240p"; }
         else { return; }
 
         [self.qualityButton setTitle:qText forState:UIControlStateNormal];
         NSTimeInterval currentTime = self.moviePlayer ? self.moviePlayer.currentPlaybackTime : 0;
-        
+
         [self.spinner startAnimating];
-        
+
         NSString *urlStr = [NSString stringWithFormat:@"%@/api/extract?videoId=%@&itag=%ld&nocache=1&t=%ld", VPSProxyBase(), self.video.videoId, (long)itag, (long)time(NULL)];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr]];
