@@ -8,7 +8,7 @@
 #import "MainTabBarController.h"
 #import "TrendingViewController.h"
 #import "ShortsViewController.h"
-#import "CategoriesViewController.h"
+#import "SubscriptionsViewController.h"
 #import "SearchViewController.h"
 #import "SettingsViewController.h"
 #import "Constants.h"
@@ -30,16 +30,14 @@
 }
 
 - (void)setupTabBar {
-    if ([self.tabBar respondsToSelector:@selector(setBarTintColor:)]) {
-    }
 }
 
 - (void)setupViewControllers {
-    // Tab 1: Trending
+    // Tab 1: Главная (Home / Recommendations)
     TrendingViewController *trendingVC = [[TrendingViewController alloc] init];
     UINavigationController *trendingNav = [[UINavigationController alloc] initWithRootViewController:trendingVC];
     trendingNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:0];
-    trendingNav.tabBarItem.title = @"Trending";
+    trendingNav.tabBarItem.title = @"Главная";
 
     // Tab 2: Shorts
     ShortsViewController *shortsVC = [[ShortsViewController alloc] init];
@@ -47,23 +45,25 @@
     shortsNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemTopRated tag:1];
     shortsNav.tabBarItem.title = @"Shorts";
 
-    // Tab 3: Categories
-    CategoriesViewController *categoriesVC = [[CategoriesViewController alloc] init];
-    UINavigationController *categoriesNav = [[UINavigationController alloc] initWithRootViewController:categoriesVC];
-    categoriesNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMostViewed tag:2];
-    categoriesNav.tabBarItem.title = @"Categories";
+    // Tab 3: Подписки (Subscriptions)
+    SubscriptionsViewController *subscriptionsVC = [[SubscriptionsViewController alloc] init];
+    UINavigationController *subscriptionsNav = [[UINavigationController alloc] initWithRootViewController:subscriptionsVC];
+    subscriptionsNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemBookmarks tag:2];
+    subscriptionsNav.tabBarItem.title = @"Подписки";
 
-    // Tab 4: Search
+    // Tab 4: Поиск (Search)
     SearchViewController *searchVC = [[SearchViewController alloc] init];
     UINavigationController *searchNav = [[UINavigationController alloc] initWithRootViewController:searchVC];
     searchNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:3];
+    searchNav.tabBarItem.title = @"Поиск";
 
-    // Tab 5: Settings (with Bookmarks/Subscriptions inside)
+    // Tab 5: Настройки (Settings)
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
     UINavigationController *settingsNav = [[UINavigationController alloc] initWithRootViewController:settingsVC];
     settingsNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:4];
+    settingsNav.tabBarItem.title = @"Настройки";
 
-    self.viewControllers = @[trendingNav, shortsNav, categoriesNav, searchNav, settingsNav];
+    self.viewControllers = @[trendingNav, shortsNav, subscriptionsNav, searchNav, settingsNav];
     self.selectedIndex = 0;
 }
 

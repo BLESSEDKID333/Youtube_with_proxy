@@ -15,7 +15,7 @@
 - (id)init {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        self.title = @"Trending";
+        self.title = @"Главная";
         _videos = [NSArray array];
         _apiManager = [[YouTubeAPIManager alloc] init];
         _apiManager.delegate = self;

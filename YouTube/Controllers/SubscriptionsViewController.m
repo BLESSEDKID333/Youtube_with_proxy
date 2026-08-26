@@ -18,7 +18,7 @@
 - (id)init {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        self.title = @"Subscriptions";
+        self.title = @"Подписки";
         _channels = @[];
         _apiManager = [[YouTubeAPIManager alloc] init];
         _apiManager.delegate = self;

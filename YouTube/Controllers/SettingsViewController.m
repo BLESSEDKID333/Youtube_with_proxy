@@ -15,7 +15,7 @@
 - (id)init {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.title = @"Settings";
+        self.title = @"Настройки";
     }
     return self;
 }
