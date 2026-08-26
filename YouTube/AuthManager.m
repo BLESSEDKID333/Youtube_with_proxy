@@ -156,6 +156,8 @@ static NSString *const kDeviceUUIDKey = @"yt_device_uuid";
         
         NSString *authHeader = [self sapisidHashHeader];
         if (authHeader) [req setValue:authHeader forHTTPHeaderField:@"Authorization"];
+        NSString *sapCookie = [self sapisidCookie];
+        if (sapCookie) [req setValue:[NSString stringWithFormat:@"SAPISID=%@; __Secure-3PSAPISID=%@", sapCookie, sapCookie] forHTTPHeaderField:@"Cookie"];
         
         NSDictionary *payload = @{@"context": @{@"client": @{@"clientName": @"WEB", @"clientVersion": @"2.20260727.01.00"}}};
         [req setHTTPBody:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil]];
