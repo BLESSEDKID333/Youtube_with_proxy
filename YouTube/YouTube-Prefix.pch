@@ -1,0 +1,21 @@
+//
+//  YouTube-Prefix.pch
+//  YouTube
+//
+//  Prefix header for all source files
+//
+
+#ifndef YouTube_Prefix_pch
+#define YouTube_Prefix_pch
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CommonCrypto/CommonDigest.h>
+#endif
+
+#ifdef __cplusplus
+    #import <string>
+#endif
+
+#endif /* YouTube_Prefix_pch */

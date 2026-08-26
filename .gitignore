@@ -1,0 +1,7 @@
+obj/
+obj_sim/
+Payload/
+*.o
+*.app
+*.ipa
+.DS_Store
