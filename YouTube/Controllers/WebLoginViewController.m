@@ -30,7 +30,7 @@
 - (void)loadView {
     self.prevUA = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserAgent"];
     [[NSUserDefaults standardUserDefaults] setObject:
-        @"Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1"
+        @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
                                               forKey:@"UserAgent"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -66,7 +66,7 @@
 
     NSString *urlStr;
     if ([self.mode isEqualToString:@"direct"]) {
-        urlStr = @"https://m.youtube.com/signin?app=mobile&action_handle_signin=true";
+        urlStr = @"https://accounts.google.com/ServiceLogin?service=youtube&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue";
     } else {
         // VPS CGI login helper
         urlStr = [NSString stringWithFormat:@"%@/cgi-bin/ytlogin?device=%@", VPSProxyBase(), [[AuthManager sharedManager] deviceUUID]];
