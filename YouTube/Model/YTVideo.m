@@ -99,9 +99,19 @@
 
     YTVideo *video = [[YTVideo alloc] init];
 
-    // Channel Renderer
+    // Channel Renderer or Grid Channel Renderer
     NSString *cid = [renderer objectForKey:@"channelId"];
-    if (cid && [cid isKindOfClass:[NSString class]]) {
+    if (!cid || ![cid isKindOfClass:[NSString class]]) {
+        id navEndpoint = [renderer objectForKey:@"navigationEndpoint"];
+        if ([navEndpoint isKindOfClass:[NSDictionary class]]) {
+            id browseEndpoint = [(NSDictionary *)navEndpoint objectForKey:@"browseEndpoint"];
+            if ([browseEndpoint isKindOfClass:[NSDictionary class]]) {
+                cid = [(NSDictionary *)browseEndpoint objectForKey:@"browseId"];
+            }
+        }
+    }
+
+    if (cid && [cid isKindOfClass:[NSString class]] && ([cid hasPrefix:@"UC"] || [renderer objectForKey:@"subscriberCountText"] || [renderer objectForKey:@"videoCountText"])) {
         video.isChannel = YES;
         video.channelId = cid;
 
@@ -113,6 +123,7 @@
                 if ([runs count] > 0) video.title = [[runs objectAtIndex:0] objectForKey:@"text"];
             }
         }
+        if (!video.title) video.title = @"Channel";
         video.channelTitle = video.title;
 
         id subObj = [renderer objectForKey:@"subscriberCountText"];
@@ -134,10 +145,19 @@
         return video;
     }
 
-    // Video ID — top level (videoId or contentId for lockupViewModel)
+    // Video ID — top level (videoId or contentId for lockupViewModel or reelItemRenderer)
     NSString *vid = [renderer objectForKey:@"videoId"];
     if (!vid || ![vid isKindOfClass:[NSString class]]) {
         vid = [renderer objectForKey:@"contentId"];
+    }
+    if (!vid || ![vid isKindOfClass:[NSString class]]) {
+        id inlinePlayer = [renderer objectForKey:@"inlinePlayerEndpoint"];
+        if ([inlinePlayer isKindOfClass:[NSDictionary class]]) {
+            id playerEndpoint = [(NSDictionary *)inlinePlayer objectForKey:@"watchEndpoint"];
+            if ([playerEndpoint isKindOfClass:[NSDictionary class]]) {
+                vid = [(NSDictionary *)playerEndpoint objectForKey:@"videoId"];
+            }
+        }
     }
     if (!vid || ![vid isKindOfClass:[NSString class]]) return nil;
     video.videoId = vid;

@@ -40,6 +40,7 @@
 - (void)fetchCategoryFromWeb:(NSString *)categoryName;
 - (void)fetchChannelVideos:(NSString *)channelId;
 - (void)fetchSubscriptions;
+- (void)fetchShortsFromWeb;
 - (void)subscribeToChannel:(NSString *)channelId;
 - (void)unsubscribeFromChannel:(NSString *)channelId;
 - (void)likeVideo:(NSString *)videoId rating:(NSString *)rating;

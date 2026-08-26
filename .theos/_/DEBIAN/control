@@ -7,4 +7,4 @@ Section: Applications
 Depends: firmware (>= 6.0)
 Architecture: iphoneos-arm
 Version: 1.0.1-1+debug
-Installed-Size: 676
+Installed-Size: 692

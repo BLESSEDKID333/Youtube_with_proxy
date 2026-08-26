@@ -60,7 +60,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
 
     if (ip.section == 0) {
-        if ([AuthManager sharedManager].loggedIn) {
+        if ([AuthManager sharedManager].isLoggedIn) {
             NSString *email = [AuthManager sharedManager].userEmail;
             NSString *name = [AuthManager sharedManager].userName;
             if (email && email.length > 0) {

@@ -109,7 +109,7 @@
     [self.view addSubview:self.commentButton];
 
     [self.spinner startAnimating];
-    [self.apiManager searchFromWeb:@"shorts"];
+    [self.apiManager fetchShortsFromWeb];
 }
 
 - (void)bringOverlaysToFront {

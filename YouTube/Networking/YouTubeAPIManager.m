@@ -93,7 +93,7 @@
 
 - (void)fetchTrendingFromWeb {
     if (self.isLoading) return;
-    DLog(@"=== fetchTrending (search-based) ===");
+    DLog(@"=== fetchTrending ===");
     self.isLoading = YES;
     self.currentMode = @"trending";
     self.currentCategory = @"Trending";
@@ -105,16 +105,19 @@
         [self.delegate apiManagerDidStartLoading:self];
     }
 
-    NSArray *queries = @[@"popular music 2026", @"trending videos", @"viral videos today", @"top hits 2026", @"trending now"];
-    NSUInteger idx = arc4random_uniform((uint32_t)[queries count]);
-    NSString *query = [queries objectAtIndex:idx];
-    DLog(@"Trending query: %@", query);
+    NSDictionary *body;
+    NSString *endpoint;
+    if ([[AuthManager sharedManager] isLoggedIn]) {
+        endpoint = INNERTUBE_BROWSE;
+        body = @{@"browseId": @"FEwhat_to_watch"};
+    } else {
+        endpoint = INNERTUBE_SEARCH;
+        NSArray *queries = @[@"popular music 2026", @"trending videos", @"viral videos today", @"top hits 2026"];
+        NSUInteger idx = arc4random_uniform((uint32_t)[queries count]);
+        body = @{@"query": [queries objectAtIndex:idx]};
+    }
 
-    NSDictionary *body = @{
-        @"query": query
-    };
-
-    NSURLRequest *req = [self buildRequestWithEndpoint:INNERTUBE_SEARCH body:body];
+    NSURLRequest *req = [self buildRequestWithEndpoint:endpoint body:body];
     self.receivedData = [NSMutableData data];
     self.activeConnection = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
 }
@@ -251,6 +254,27 @@
 
     NSDictionary *body = @{
         @"browseId": @"FEsubscriptions"
+    };
+
+    NSURLRequest *req = [self buildRequestWithEndpoint:INNERTUBE_BROWSE body:body];
+    self.receivedData = [NSMutableData data];
+    self.activeConnection = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
+}
+
+- (void)fetchShortsFromWeb {
+    if (self.isLoading) return;
+    DLog(@"=== fetchShortsFromWeb ===");
+    self.isLoading = YES;
+    self.currentMode = @"shorts";
+    self.currentCategory = @"Shorts";
+    self.currentTag = 5;
+
+    if ([self.delegate respondsToSelector:@selector(apiManagerDidStartLoading:)]) {
+        [self.delegate apiManagerDidStartLoading:self];
+    }
+
+    NSDictionary *body = @{
+        @"browseId": @"FEshorts"
     };
 
     NSURLRequest *req = [self buildRequestWithEndpoint:INNERTUBE_BROWSE body:body];
@@ -405,7 +429,7 @@
         if ([self.delegate respondsToSelector:@selector(apiManager:didSubscribeToChannel:subscribed:)]) {
             [self.delegate apiManager:self didSubscribeToChannel:self.currentTargetChannelId subscribed:subscribed];
         }
-    } else if ([self.currentMode isEqualToString:@"trending"] || [self.currentMode isEqualToString:@"category"] || [self.currentMode isEqualToString:@"subscriptions"]) {
+    } else if ([self.currentMode isEqualToString:@"trending"] || [self.currentMode isEqualToString:@"category"] || [self.currentMode isEqualToString:@"subscriptions"] || [self.currentMode isEqualToString:@"shorts"]) {
         if ([self.delegate respondsToSelector:@selector(apiManager:didReceiveVideos:forCategory:)]) {
             [self.delegate apiManager:self didReceiveVideos:videos
                           forCategory:self.currentCategory ?: self.currentMode];
