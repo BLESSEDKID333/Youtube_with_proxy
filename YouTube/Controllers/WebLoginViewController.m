@@ -111,21 +111,16 @@
     if (!self.checkingCookie) return;
     if (self.loginDetected) return;
 
-    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *c in [storage cookies]) {
-        if ([[c.name uppercaseString] isEqualToString:@"SAPISID"] ||
-            [[c.name uppercaseString] isEqualToString:@"__SECURE-3PSAPISID"]) {
-            if (c.value.length > 0) {
-                DLog(@"[WebLogin] SAPISID auto-detected in CookieStorage: %@", c.value);
-                self.loginDetected = YES;
-                self.checkingCookie = NO;
-                [self loginComplete:c.value hsid:@"" ssid:@"" apisid:@""];
-                return;
-            }
-        }
+    NSString *sapisid = [[AuthManager sharedManager] sapisidCookie];
+    if ([sapisid length] > 0) {
+        DLog(@"[WebLogin] SAPISID cookie found! Logging in...");
+        self.loginDetected = YES;
+        self.checkingCookie = NO;
+        [self loginComplete:sapisid hsid:@"" ssid:@"" apisid:@""];
+        return;
     }
 
-    [self performSelector:@selector(checkCookieLoop) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(checkCookieLoop) withObject:nil afterDelay:1.5];
 }
 
 - (void)loginComplete:(NSString *)sapisid hsid:(NSString *)hsid ssid:(NSString *)ssid apisid:(NSString *)apisid {
@@ -251,7 +246,7 @@
     DLog(@"[WebLogin] Finished loading: %@", urlStr);
 
     // If redirected to main page after Google sign in
-    if (urlStr && [urlStr rangeOfString:@"youtube.com"].location != NSNotFound &&
+    if (urlStr && [urlStr rangeOfString:@"m.youtube.com"].location != NSNotFound &&
         [urlStr rangeOfString:@"/signin"].location == NSNotFound &&
         [urlStr rangeOfString:@"/ServiceLogin"].location == NSNotFound &&
         [urlStr rangeOfString:@"accounts.google.com"].location == NSNotFound) {
@@ -292,6 +287,7 @@
             }
         }
 
+        // Highlight Done button so user can confirm sign in
         self.navigationItem.rightBarButtonItem.title = @"Завершить вход";
         self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
     }
