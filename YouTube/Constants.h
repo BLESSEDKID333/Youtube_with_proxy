@@ -52,8 +52,8 @@ static inline NSString * VPSProxyBase(void) {
 #define VPS_INNERTUBE_BASE   [NSString stringWithFormat:@"%@/youtubei/v1", VPSProxyBase()]
 #define DIRECT_INNERTUBE_BASE   @"https://www.youtube.com/youtubei/v1"
 
-// Select based on bypass setting (Direct Native HTTPS by default)
-#define INNERTUBE_BASE       (VPSBypassEnabled() ? DIRECT_INNERTUBE_BASE : VPS_INNERTUBE_BASE)
+// Select based on bypass setting (VPS Proxy by default)
+#define INNERTUBE_BASE       (VPSBypassEnabled() ? VPS_INNERTUBE_BASE : DIRECT_INNERTUBE_BASE)
 #define INNERTUBE_BROWSE     [NSString stringWithFormat:@"%@/browse", INNERTUBE_BASE]
 #define INNERTUBE_SEARCH     [NSString stringWithFormat:@"%@/search", INNERTUBE_BASE]
 #define INNERTUBE_NEXT       [NSString stringWithFormat:@"%@/next", INNERTUBE_BASE]
