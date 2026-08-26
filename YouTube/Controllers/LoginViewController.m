@@ -67,17 +67,17 @@
 
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"Native QR & Cookie Sign In (No VPS)";
-            cell.detailTextLabel.text = @"100% Native on device (Recommended)";
+            cell.textLabel.text = @"Вход через Google (Логин и пароль)";
+            cell.detailTextLabel.text = @"Вход в браузере Google (Авто-закрытие)";
             cell.textLabel.textColor = COLOR_YOUTUBE_RED;
         } else {
-            cell.textLabel.text = @"Sign In via Google Web";
-            cell.detailTextLabel.text = @"Direct Google web form";
+            cell.textLabel.text = @"Вход по QR-коду / Куки";
+            cell.detailTextLabel.text = @"Сканирование QR или ввод SAPISID";
             cell.textLabel.textColor = [UIColor blackColor];
         }
     } else {
-        cell.textLabel.text = @"Enter SAPISID Cookie Manually";
-        cell.detailTextLabel.text = @"Quick popup text field";
+        cell.textLabel.text = @"Ввести куки SAPISID вручную";
+        cell.detailTextLabel.text = @"Быстрое окно ввода для продвинутых";
         cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:0.4 blue:0.8 alpha:1.0];
     }
 
@@ -89,12 +89,12 @@
 
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            NativeQRLoginViewController *nvc = [[NativeQRLoginViewController alloc] init];
-            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:nvc];
-            [self presentViewController:nav animated:YES completion:nil];
-        } else {
             WebLoginViewController *webVC = [[WebLoginViewController alloc] initWithMode:@"direct"];
             UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:webVC];
+            [self presentViewController:nav animated:YES completion:nil];
+        } else {
+            NativeQRLoginViewController *nvc = [[NativeQRLoginViewController alloc] init];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:nvc];
             [self presentViewController:nav animated:YES completion:nil];
         }
     } else {
