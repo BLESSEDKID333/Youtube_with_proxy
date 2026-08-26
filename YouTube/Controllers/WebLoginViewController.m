@@ -30,7 +30,7 @@
 - (void)loadView {
     self.prevUA = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserAgent"];
     [[NSUserDefaults standardUserDefaults] setObject:
-        @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.0 Mobile/14G60 Safari/602.1"
                                               forKey:@"UserAgent"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -44,9 +44,9 @@
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [contentView addSubview:self.webView];
 
-    self.spinner = [[UIActivityIndicatorView alloc]
-        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.spinner.center = contentView.center;
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinner.center = CGPointMake(contentView.frame.size.width / 2.0, contentView.frame.size.height / 2.0);
+    self.spinner.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     self.spinner.hidesWhenStopped = YES;
     [contentView addSubview:self.spinner];
     [self.spinner startAnimating];
@@ -66,7 +66,7 @@
 
     NSString *urlStr;
     if ([self.mode isEqualToString:@"direct"]) {
-        urlStr = @"https://accounts.google.com/ServiceLogin?service=youtube&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue";
+        urlStr = @"https://accounts.google.com/ServiceLogin?service=youtube&passive=true&continue=https%3A%2F%2Fm.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue";
     } else {
         // VPS CGI login helper
         urlStr = [NSString stringWithFormat:@"%@/cgi-bin/ytlogin?device=%@", VPSProxyBase(), [[AuthManager sharedManager] deviceUUID]];
