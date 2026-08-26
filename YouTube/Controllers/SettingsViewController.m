@@ -61,11 +61,19 @@
 
     if (ip.section == 0) {
         if ([AuthManager sharedManager].loggedIn) {
-            cell.textLabel.text = @"Sign Out";
+            NSString *email = [AuthManager sharedManager].userEmail;
+            NSString *name = [AuthManager sharedManager].userName;
+            if (email && email.length > 0) {
+                cell.textLabel.text = [NSString stringWithFormat:@"Выйти (%@)", email];
+            } else if (name && name.length > 0) {
+                cell.textLabel.text = [NSString stringWithFormat:@"Выйти (%@)", name];
+            } else {
+                cell.textLabel.text = @"Выйти из аккаунта (Sign Out)";
+            }
             cell.textLabel.textColor = [UIColor redColor];
         } else {
-            cell.textLabel.text = @"Sign In";
-            cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.text = @"Войти в аккаунт (Sign In)";
+            cell.textLabel.textColor = COLOR_YOUTUBE_RED;
         }
     } else if (ip.section == 1) {
         cell.textLabel.text = @"Bookmarks & Subscriptions";
