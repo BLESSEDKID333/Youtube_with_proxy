@@ -241,6 +241,56 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)wv {
     [self.spinner stopAnimating];
+
+    NSString *urlStr = [[wv.request URL] absoluteString];
+    DLog(@"[WebLogin] Finished loading: %@", urlStr);
+
+    // If redirected to main page after Google sign in
+    if (urlStr && [urlStr rangeOfString:@"m.youtube.com"].location != NSNotFound &&
+        [urlStr rangeOfString:@"/signin"].location == NSNotFound &&
+        [urlStr rangeOfString:@"/ServiceLogin"].location == NSNotFound &&
+        [urlStr rangeOfString:@"accounts.google.com"].location == NSNotFound) {
+
+        NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        NSString *foundSAPISID = nil;
+        for (NSHTTPCookie *c in [storage cookies]) {
+            if ([c.name isEqualToString:@"SAPISID"] || [c.name isEqualToString:@"__Secure-3PSAPISID"]) {
+                foundSAPISID = c.value;
+                break;
+            }
+        }
+
+        if (foundSAPISID.length > 0) {
+            DLog(@"[WebLogin] SAPISID auto-extracted from NSHTTPCookieStorage!");
+            self.loginDetected = YES;
+            self.checkingCookie = NO;
+            [self loginComplete:foundSAPISID hsid:@"" ssid:@"" apisid:@""];
+            return;
+        }
+
+        NSString *jsCookie = [wv stringByEvaluatingJavaScriptFromString:@"document.cookie"];
+        if (jsCookie && [jsCookie rangeOfString:@"SAPISID="].location != NSNotFound) {
+            NSArray *parts = [jsCookie componentsSeparatedByString:@";"];
+            for (NSString *p in parts) {
+                NSString *tp = [p stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                if ([tp hasPrefix:@"SAPISID="]) {
+                    foundSAPISID = [tp substringFromIndex:8];
+                    break;
+                }
+            }
+            if (foundSAPISID.length > 0) {
+                DLog(@"[WebLogin] SAPISID auto-extracted from document.cookie!");
+                self.loginDetected = YES;
+                self.checkingCookie = NO;
+                [self loginComplete:foundSAPISID hsid:@"" ssid:@"" apisid:@""];
+                return;
+            }
+        }
+
+        // Highlight Done button so user can confirm sign in
+        self.navigationItem.rightBarButtonItem.title = @"Завершить вход";
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+    }
 }
 
 - (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error {
